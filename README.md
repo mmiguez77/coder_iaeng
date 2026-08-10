@@ -1,6 +1,6 @@
 # Coderhouse AI Engineering - Módulo 1: Conexión y Abstracción de LLMs
 
-Este repositorio contiene la implementación del Módulo 1 del programa de AI Engineering, estructurado bajo los lineamientos de **Clean Architecture** (Arquitectura Limpia) y mejores prácticas en Python 3.12. 
+Este repositorio contiene los desafíos del curso de AI Engineering. 
 
 El proyecto implementa un Unified Async LLM Client (cliente unificado asíncrono e intercambiable para OpenAI, Anthropic y Gemini) y un orquestador concurrente con control de flujo (semáforos) y resiliencia ante fallos (timeouts).
 
@@ -8,36 +8,34 @@ El proyecto implementa un Unified Async LLM Client (cliente unificado asíncrono
 
 ## Estructura Modular del Proyecto
 
-Todo el código fuente y su configuración se encuentra aislado dentro del directorio `app/`:
+Todo el código fuente y su configuración se encuentran aislados dentro del directorio `app/`:
 
 ```text
-coderhouse/
-├── README.md               # Este archivo de documentación
-├── agent.md                # Bitácora del agente y control de cambios
-└── app/
-    ├── config/
-    │   └── settings.py     # Carga de variables de entorno y configuración con pydantic-settings
-    ├── domain/
-    │   ├── entities/
-    │   │   └── base_client.py # Interfaz abstracta común (BaseLLMClient)
-    │   ├── exceptions/
-    │   │   └── base.py     # Jerarquía de excepciones personalizadas para el dominio
-    │   └── schemas/
-    │       └── chat.py     # Modelos de datos para chat y enums (ChatMessage, LLMConfig, etc.)
-    ├── infrastructure/
-    │   ├── clients/
-    │   │   ├── openai_client.py
-    │   │   ├── anthropic_client.py
-    │   │   └── gemini_client.py # Integración asíncrona con el SDK de google-genai
-    │   └── factory.py      # Patrón Factory para la creación de clientes (LLMFactory)
-    ├── core/
-    │   └── manager.py      # Orquestador de llamadas concurrentes (AsyncLLMManager)
-    ├── logs/
-    │   └── execution.log   # Archivo de logs de ejecución formateados
-    ├── .env                # Archivo de credenciales local (ignorado por git)
-    ├── .env.example        # Plantilla de variables de entorno
-    ├── .gitignore          # Exclusiones de Git locales del módulo
-    └── main.py             # Punto de entrada principal y validador del sistema
+app/
+  ├── config/
+  │   └── settings.py     # Carga de variables de entorno y configuración con pydantic-settings
+  ├── domain/
+  │   ├── entities/
+  │   │   └── base_client.py # Interfaz abstracta común (BaseLLMClient)
+  │   ├── exceptions/
+  │   │   └── base.py     # Jerarquía de excepciones personalizadas para el dominio
+  │   └── schemas/
+  │       └── chat.py     # Modelos de datos para chat y enums (ChatMessage, LLMConfig, etc.)
+  ├── infrastructure/
+  │   ├── clients/
+  │   │   ├── openai_client.py
+  │   │   ├── anthropic_client.py
+  │   │   └── gemini_client.py # Integración asíncrona con el SDK de google-genai
+  │   └── factory.py      # Patrón Factory para la creación de clientes (LLMFactory)
+  ├── core/
+  │   └── manager.py      # Orquestador de llamadas concurrentes (AsyncLLMManager)
+  ├── logs/
+  │   └── execution.log   # Archivo de logs de ejecución formateados
+  ├── .env                # Archivo de credenciales local (ignorado por git)
+  ├── .env.example        # Plantilla de variables de entorno
+  ├── .gitignore          # Exclusiones de Git locales del módulo
+  ├── main.py             # Punto de entrada principal y validador del sistema
+  └── README.md           # Este archivo de documentación
 ```
 
 ---
@@ -46,37 +44,34 @@ coderhouse/
 
 - **Python**: Versión 3.12 o superior.
 - **Librerías principales**:
-  - `google-genai` (SDK oficial de Google)
+  - `google-genai`
   - `openai`
   - `anthropic`
   - `pydantic` y `pydantic-settings`
   - `python-dotenv`
-  - `loguru` (para trazado y logs estructurados)
+  - `loguru`
 
 ---
 
 ## Configuración y Variables de Entorno
 
-1. Copia el archivo de plantilla a tu archivo local de variables de entorno:
+1. Copiar y renombrar el archivo de plantilla `.env.example` a `.env` dentro de la carpeta `app/`:
    ```bash
    cp app/.env.example app/.env
    ```
-2. Abre [`app/.env`](app/.env) y configura tus credenciales:
-   - Ingresa tus API Keys reales de los proveedores.
-   - **`DEFAULT_PROVIDER`**:
-     - Establécelo con un proveedor específico (`openai`, `anthropic` o `gemini`) para realizar la consulta únicamente a ese modelo.
-     - Déjalo **vacío** para indicar al orquestador concurrente que realice la consulta a los tres modelos en paralelo simultáneamente.
-
-*Nota: Para verificar la tolerancia a fallos, puedes inyectar API Keys incorrectas de OpenAI y Anthropic, y la API Key real de Gemini. Verás cómo las dos primeras reportan errores de autenticación 401 reales capturados de forma segura, mientras que Gemini responde exitosamente y continúa la ejecución.*
+2. Modificar las variables del archivo `.env` resultante e ingresar tus API Keys de OpenAI, Anthropic y Gemini.
+3. Configurar el proveedor por defecto en la variable `DEFAULT_PROVIDER`:
+   - Completar para trabajar con un proveedor específico (`openai`, `anthropic` o `gemini`).
+   - Dejar vacío para indicar al orquestador que realice la consulta a los tres modelos en paralelo simultáneamente.
 
 ---
 
 ## Instrucciones de Instalación y Ejecución
 
-Sigue estos pasos desde la raíz del proyecto (`coderhouse/`):
+Pasos para la instalación y ejecución desde la raíz del proyecto (`coderhouse/`):
 
 ### 1. Crear y Activar el Entorno Virtual
-Crea el entorno virtual dentro de la carpeta `app/` para mantener el proyecto limpio y aislado:
+Para mantener el proyecto limpio y aislado, crear el entorno virtual dentro de la carpeta `app/`:
 
 ```bash
 # Crear entorno virtual
@@ -87,7 +82,7 @@ source app/.venv/bin/activate
 ```
 
 ### 2. Instalar Dependencias
-Instala los paquetes necesarios en el entorno virtual activo:
+Instalar los paquetes necesarios en el entorno virtual activo:
 
 ```bash
 pip install -r app/.env.example  # o directamente las librerías:
@@ -95,13 +90,13 @@ pip install openai anthropic google-genai pydantic pydantic-settings python-dote
 ```
 
 ### 3. Ejecutar la Aplicación
-Para correr la prueba única de los colores (que evalúa la selección de proveedor, la concurrencia asíncrona mediante semáforos/timeouts y el streaming de tokens), ejecuta desde la raíz:
+Para correr la prueba única (que evalúa la selección de proveedor, la concurrencia asíncrona mediante semáforos/timeouts y el streaming de tokens), ejecutar desde la raíz:
 
 ```bash
 python -m app.main
 ```
 
-Si deseas ejecutar desde la misma carpeta `app/`, debes configurar temporalmente el `PYTHONPATH`:
+Para ejecutar dentro de la carpeta, `app/`, configurar temporalmente `PYTHONPATH`:
 
 ```bash
 cd app
