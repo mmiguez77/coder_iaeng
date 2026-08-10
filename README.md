@@ -1,7 +1,6 @@
 # Coderhouse AI Engineering - Módulo 1: Conexión y Abstracción de LLMs
 
 Este repositorio contiene los desafíos del curso de AI Engineering. 
-
 El proyecto implementa un Unified Async LLM Client (cliente unificado asíncrono e intercambiable para OpenAI, Anthropic y Gemini) y un orquestador concurrente con control de flujo (semáforos) y resiliencia ante fallos (timeouts).
 
 ---
