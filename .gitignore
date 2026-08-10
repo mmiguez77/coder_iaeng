@@ -11,3 +11,6 @@ __pycache__/
 
 # Ignorar la carpeta física de logs locales
 logs/
+
+# Ignorar bitácora de desarrollo local del agente
+agent.md
