@@ -1,0 +1,13 @@
+# Ignorar entorno virtual local del proyecto
+.venv/
+venv/
+
+# Ignorar archivos de variables de entorno locales (secretos)
+.env
+
+# Ignorar caches de compilación de Python
+__pycache__/
+*.py[cod]
+
+# Ignorar la carpeta física de logs locales
+logs/
