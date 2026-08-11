@@ -33,6 +33,7 @@ app/
   ├── .env                # Archivo de credenciales local (ignorado por git)
   ├── .env.example        # Plantilla de variables de entorno
   ├── .gitignore          # Exclusiones de Git locales del módulo
+  ├── requirements.txt    # Lista de dependencias del proyecto
   ├── main.py             # Punto de entrada principal y validador del sistema
   └── README.md           # Este archivo de documentación
 ```
@@ -84,8 +85,7 @@ source app/.venv/bin/activate
 Instalar los paquetes necesarios en el entorno virtual activo:
 
 ```bash
-pip install -r app/.env.example  # o directamente las librerías:
-pip install openai anthropic google-genai pydantic pydantic-settings python-dotenv loguru
+pip install -r app/requirements.txt
 ```
 
 ### 3. Ejecutar la Aplicación
