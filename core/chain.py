@@ -94,17 +94,22 @@ def build_extraction_chain(config: Optional[LLMConfig] = None):
         wait_exponential_jitter=True
     )
 
-    # Prompt Template modular utilizando ChatPromptTemplate
+    # Prompt Template modular utilizando ChatPromptTemplate con roles System y Human
     prompt = ChatPromptTemplate.from_messages([
         (
-            "user",
-            "Analiza el siguiente texto de entrada y extrae la información técnica requerida "
-            "en el esquema estructurado:\n\n{text}"
+            "system",
+            "Eres un ingeniero de IA y arquitecto de software experto. "
+            "Tu tarea es analizar el texto técnico y extraer la información estructurada solicitada. "
+            "DEBES responder ÚNICAMENTE con el objeto JSON que cumpla el esquema."
+        ),
+        (
+            "human",
+            "Analiza el siguiente texto de entrada y extrae las entidades técnicas:\n\n{text}"
         )
     ])
 
-    # Cadena LCEL declarativa compuesta
-    chain = (lambda x: prompt.format(**x)) | resilient_llm
+    # Cadena LCEL declarativa compuesta: prompt | resilient_llm
+    chain = prompt | resilient_llm
     return chain
 
 
