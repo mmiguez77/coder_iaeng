@@ -148,12 +148,21 @@ async def process_text(text: str, config: Optional[LLMConfig] = None, max_retrie
 
         except Exception as e:
             err_str = str(e)
-            if ("429" in err_str or "RESOURCE_EXHAUSTED" in err_str or "Quota exceeded" in err_str) and attempt < max_retries:
-                wait_seconds = 20 * attempt
+            is_rate_limit = any(k in err_str for k in ("429", "RESOURCE_EXHAUSTED", "Quota exceeded", "Rate limit"))
+            
+            if is_rate_limit and attempt < max_retries:
+                wait_seconds = 25 * attempt
                 logger.warning(
                     f"Límite de tasa detectado (429 Rate Limit/Quota). Reintentando en {wait_seconds}s (Intento {attempt}/{max_retries})..."
                 )
                 await asyncio.sleep(wait_seconds)
+            elif is_rate_limit:
+                clean_msg = (
+                    "Límite de cuota alcanzado en la API del proveedor (429 RESOURCE_EXHAUSTED). "
+                    "Por favor, espere 1 minuto a que se restablezca la cuota de la API antes de reintentar."
+                )
+                logger.error(clean_msg)
+                raise RuntimeError(clean_msg) from e
             else:
                 logger.error(f"Error irrecuperable durante la ejecución del pipeline de extracción: {e}")
                 raise e

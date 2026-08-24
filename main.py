@@ -60,13 +60,14 @@ async def run_pipeline_tests():
     logger.info("\n--- CASO DE PRUEBA 1: Log de Error e Infraestructura ---")
     logger.info(f"Texto de entrada:\n\"{sample_text_1}\"")
     
-    result_1 = await process_text(sample_text_1, config)
-
-    # Convertir a JSON formateado para verificación
-    json_output_1 = json.dumps(result_1.model_dump(), indent=2, ensure_ascii=False)
-    logger.info(f"Objeto Pydantic Validado (JSON):\n{json_output_1}")
-    print("\n--- SALIDA ESPERADA JSON (CASO 1) ---")
-    print(json_output_1)
+    try:
+        result_1 = await process_text(sample_text_1, config)
+        json_output_1 = json.dumps(result_1.model_dump(), indent=2, ensure_ascii=False)
+        logger.info(f"Objeto Pydantic Validado (JSON):\n{json_output_1}")
+        print("\n--- SALIDA ESPERADA JSON (CASO 1) ---")
+        print(json_output_1)
+    except Exception as e:
+        logger.error(f"Error procesando Caso de Prueba 1: {e}")
 
     # Caso de prueba 2: Prueba de Estrés / Texto Ambiguo
     logger.info("\n--- ESPERANDO 2 SEGUNDOS ENTRE PRUEBAS (RATE LIMIT SAFETY) ---")
@@ -80,14 +81,16 @@ async def run_pipeline_tests():
     logger.info("\n--- CASO DE PRUEBA 2: Texto Ambiguo (Prueba de Estrés) ---")
     logger.info(f"Texto de entrada:\n\"{sample_text_2}\"")
 
-    result_2 = await process_text(sample_text_2, config)
+    try:
+        result_2 = await process_text(sample_text_2, config)
+        json_output_2 = json.dumps(result_2.model_dump(), indent=2, ensure_ascii=False)
+        logger.info(f"Objeto Pydantic Validado (JSON):\n{json_output_2}")
+        print("\n--- SALIDA ESPERADA JSON (CASO 2) ---")
+        print(json_output_2)
+    except Exception as e:
+        logger.error(f"Error procesando Caso de Prueba 2: {e}")
 
-    json_output_2 = json.dumps(result_2.model_dump(), indent=2, ensure_ascii=False)
-    logger.info(f"Objeto Pydantic Validado (JSON):\n{json_output_2}")
-    print("\n--- SALIDA ESPERADA JSON (CASO 2) ---")
-    print(json_output_2)
-
-    logger.info("=== PRUEBAS COMPLETADAS CON EXITO ===")
+    logger.info("=== EJECUCIÓN DE PRUEBAS FINALIZADA ===")
 
 
 async def main():
