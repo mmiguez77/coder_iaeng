@@ -22,6 +22,14 @@ class AppSettings(BaseSettings):
     temperature: float = 0.7
     max_tokens: int = 1024
 
+    # Configuración de Pinecone (Módulo 4)
+    pinecone_api_key: Optional[str] = None
+    pinecone_index_name: str = "coderhouse-rag-index"
+    pinecone_cloud: str = "aws"
+    pinecone_region: str = "us-east-1"
+    pinecone_namespace: str = "dev-technical-docs"
+    openai_embedding_model: str = "text-embedding-3-small"
+
     def get_llm_config(self) -> LLMConfig:
         """Retorna la configuración validada de LLMConfig de Pydantic."""
         provider = None
@@ -42,7 +50,12 @@ class AppSettings(BaseSettings):
         )
 
 
+def get_settings() -> AppSettings:
+    """Retorna la instancia completa de configuración AppSettings."""
+    return AppSettings()
+
+
 def load_settings() -> LLMConfig:
-    """Carga y retorna la configuración de la aplicación."""
+    """Carga y retorna la configuración de la aplicación para LLMs (compatibilidad Módulo 2 y 3)."""
     settings = AppSettings()
     return settings.get_llm_config()

@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "descripcion": "Benchmark Golden Set para evaluación cuantitativa de recuperación RAG híbrida (Módulo 4)",
+  "casos": [
+    {
+      "id": "TC-001",
+      "pregunta": "¿Cómo se compone una cadena declarativa en LangChain Expression Language (LCEL)?",
+      "documento_esperado": "langchain_intro.md",
+      "categoria": "framework",
+      "palabras_clave": ["LCEL", "pipe", "ainvoke", "with_retry", "prompt"]
+    },
+    {
+      "id": "TC-002",
+      "pregunta": "¿Cuál es el propósito del operador Ellipsis (...) en los atributos de un modelo Pydantic BaseModel?",
+      "documento_esperado": "pydantic_guide.md",
+      "categoria": "data-validation",
+      "palabras_clave": ["BaseModel", "Ellipsis", "Field", "ValidationError", "obligatorio"]
+    },
+    {
+      "id": "TC-003",
+      "pregunta": "¿Qué parámetro de metadatos se utiliza en ChromaDB para definir la métrica de distancia hnsw:space de similitud coseno?",
+      "documento_esperado": "chromadb_guide.md",
+      "categoria": "persistence",
+      "palabras_clave": ["hnsw:space", "cosine", "PersistentClient", "coleccion"]
+    },
+    {
+      "id": "TC-004",
+      "pregunta": "¿Por qué se recomienda from_tiktoken_encoder para medir el chunk_size en un pipeline RAG y evitar el problema Lost in the Middle?",
+      "documento_esperado": "rag_concepts.md",
+      "categoria": "architecture",
+      "palabras_clave": ["chunk_size", "tiktoken", "Lost in the Middle", "chunk_overlap", "RecursiveCharacterTextSplitter"]
+    },
+    {
+      "id": "TC-005",
+      "pregunta": "¿Para qué se utilizan los namespaces en Pinecone Serverless y qué ventajas ofrece la búsqueda híbrida con BM25?",
+      "documento_esperado": "pinecone_serverless_guide.md",
+      "categoria": "cloud-infrastructure",
+      "palabras_clave": ["namespaces", "Serverless", "multi-tenancy", "BM25", "EnsembleRetriever"]
+    }
+  ]
+}

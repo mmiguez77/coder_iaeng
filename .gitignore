@@ -14,3 +14,9 @@ logs/
 
 # Ignorar bitácora de desarrollo local del agente
 agent.md
+
+# Ignorar base de datos vectorial local de ChromaDB (Módulo 3)
+vectorstore/
+
+# Ignorar archivos temporales o artefactos accidentales de redirección en shell
+=*
